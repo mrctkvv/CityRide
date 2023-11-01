@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Authors>CityRide</Authors>
+		<Version>1.1.1</Version>
+        <Description>Nuget package CityRide.Events that would contain all the events that are used in CityRide projects</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CityRide.Domain" Version="1.0.1" />
+    </ItemGroup>
+
+</Project>

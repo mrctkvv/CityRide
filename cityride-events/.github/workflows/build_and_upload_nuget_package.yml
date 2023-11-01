@@ -1,0 +1,28 @@
+name: Build and upload nuget package
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x' # SDK Version to use.
+          source-url: https://nuget.pkg.github.com/EugeneEX/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_TOKEN}}
+      - run: dotnet restore src/CityRide.Events/CityRide.Events.csproj
+      - run: dotnet build --configuration Release src/CityRide.Events/CityRide.Events.csproj
+      - name: Create the package
+        run: dotnet pack --configuration Release src/CityRide.Events/CityRide.Events.csproj
+      - name: Publish the package to GPR
+        run: dotnet nuget push src/CityRide.Events/bin/Release/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_TOKEN}}
